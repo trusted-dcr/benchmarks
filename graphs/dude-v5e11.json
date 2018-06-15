@@ -1,0 +1,154 @@
+{
+    "self": { "hex": "0x0000000000000000" },
+    "peers": [
+        {
+            "addr": "127.0.0.1:5101",
+            "event": { "hex": "0x0000000000000001" },
+            "uid": { "hex": "0x5101000000000000" }
+        },
+        {
+            "addr": "127.0.0.1:5102",
+            "event": { "hex": "0x0000000000000001" },
+            "uid": { "hex": "0x5102000000000000" }
+        },
+
+        {
+            "addr": "127.0.0.1:5201",
+            "event": { "hex": "0x0000000000000002" },
+            "uid": { "hex": "0x5201000000000000" }
+        },
+        {
+            "addr": "127.0.0.1:5202",
+            "event": { "hex": "0x0000000000000002" },
+            "uid": { "hex": "0x5202000000000000" }
+        },
+        {
+            "addr": "127.0.0.1:5203",
+            "event": { "hex": "0x0000000000000002" },
+            "uid": { "hex": "0x5203000000000000" }
+        },
+
+        {
+            "addr": "127.0.0.1:5301",
+            "event": { "hex": "0x0000000000000003" },
+            "uid": { "hex": "0x5301000000000000" }
+        },
+
+        {
+            "addr": "127.0.0.1:5401",
+            "event": { "hex": "0x0000000000000004" },
+            "uid": { "hex": "0x5401000000000000" }
+        },
+        {
+            "addr": "127.0.0.1:5402",
+            "event": { "hex": "0x0000000000000004" },
+            "uid": { "hex": "0x5402000000000000" }
+        },
+        {
+            "addr": "127.0.0.1:5403",
+            "event": { "hex": "0x0000000000000004" },
+            "uid": { "hex": "0x5403000000000000" }
+        },
+        {
+            "addr": "127.0.0.1:5404",
+            "event": { "hex": "0x0000000000000004" },
+            "uid": { "hex": "0x5404000000000000" }
+        },
+        {
+            "addr": "127.0.0.1:5405",
+            "event": { "hex": "0x0000000000000004" },
+            "uid": { "hex": "0x5405000000000000" }
+        },
+
+        {
+            "addr": "127.0.0.1:5501",
+            "event": { "hex": "0x0000000000000005" },
+            "uid": { "hex": "0x5501000000000000" }
+        }
+    ],
+    "workflow": {
+        "events": [
+            {
+                "conditionRelations": [
+                    { "hex": "0x0000000000000002" }
+                ],
+                "excludeRelations": [],
+                "executed": false,
+                "includeRelations": [
+                    { "hex": "0x0000000000000004" }
+                ],
+                "excluded": false,
+                "milestoneRelations": [],
+                "name": "Propose_DU",
+                "pending": false,
+                "responseRelations": [
+                    { "hex": "0x0000000000000004" }
+                ],
+                "uid": { "hex": "0x0000000000000001" }
+            },
+            {
+                "conditionRelations": [],
+                "excludeRelations": [],
+                "executed": false,
+                "includeRelations": [
+                    { "hex": "0x0000000000000003" }
+                ],
+                "excluded": false,
+                "milestoneRelations": [],
+                "name": "Propose_DE",
+                "pending": false,
+                "responseRelations": [
+                    { "hex": "0x0000000000000003" }
+                ],
+                "uid": { "hex": "0x0000000000000002" }
+            },
+            {
+                "conditionRelations": [],
+                "excludeRelations": [
+                    { "hex": "0x0000000000000003" },
+                    { "hex": "0x0000000000000004" }
+                ],
+                "executed": false,
+                "includeRelations": [],
+                "excluded": true,
+                "milestoneRelations": [
+                    { "hex": "0x0000000000000005" }
+                ],
+                "name": "Accept_DU",
+                "pending": false,
+                "responseRelations": [],
+                "uid": { "hex": "0x0000000000000003" }
+            },
+            {
+                "conditionRelations": [],
+                "excludeRelations": [
+                    { "hex": "0x0000000000000003" },
+                    { "hex": "0x0000000000000004" }
+                ],
+                "executed": false,
+                "includeRelations": [],
+                "excluded": true,
+                "milestoneRelations": [
+                    { "hex": "0x0000000000000005" }
+                ],
+                "name": "Accept_DE",
+                "pending": false,
+                "responseRelations": [],
+                "uid": { "hex": "0x0000000000000004" }
+            },
+            {
+                "conditionRelations": [],
+                "excludeRelations": [],
+                "executed": false,
+                "includeRelations": [],
+                "excluded": false,
+                "milestoneRelations": [],
+                "name": "Hold meeting",
+                "pending": true,
+                "responseRelations": [],
+                "uid": { "hex": "0x0000000000000005" }
+            }
+        ],
+        "name": "DU_DE Workflow"
+    }
+}
