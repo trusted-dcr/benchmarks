@@ -3,9 +3,10 @@ import json
 import subprocess
 import os
 import shutil
+import random
+import time
 
-START_PORT = 50500
-DETACHED_PROCESS = 0x00000008
+START_PORT = 5500
 
 def hex128(i):
   return format(i, '#018x')
@@ -36,9 +37,10 @@ num_relations = reduce((lambda a, b: a + b),
     conf['workflow']['events']))
 num_peers = args.num_peers;
 
-print 'NUM EVENTS:....%i' % num_events
-print 'NUM RELAITONS..%i' % num_relations
-print 'NUM PEERS:.....%i' % num_peers
+print 'EVENTS:........%i' % num_events
+print 'RELAITONS......%i' % num_relations
+print 'PEERS:.........%i' % num_peers
+print 'EXEC THREADS:..%i' % num_peers
 
 # setup peers in config
 for pi in range(num_peers):
@@ -52,18 +54,18 @@ for pi in range(num_peers):
 
   conf['peers'].append(peer)
 
-print 'Writing temp config files..'
+print 'Writing temp config files...'
 if not os.path.exists('temp'):
   os.mkdir('temp')
 os.chdir('temp')
 for pi in range(num_peers):
   peer = conf['peers'][pi]
   conf['self'] = peer['uid']
-  with open("{0}.json".format(peer['uid']['hex']), "w") as pconf_file:
+  with open('{0}.json'.format(peer['uid']['hex']), 'w') as pconf_file:
     json.dump(conf, pconf_file)
-os.chdir("..")
+os.chdir('..')
 
-print 'Starting enclaves..'
+print 'Starting enclaves...'
 os.chdir('../tdcr')
 FNULL = open(os.devnull, 'w')
 for pi in range(num_peers):
@@ -79,4 +81,22 @@ for pi in range(num_peers):
     ],
     stdout=FNULL,
     stderr=subprocess.STDOUT)
-os.chdir('../benchmarks')
+
+def exec_work():
+  pi = random.randint(0, num_peers - 1)
+  ei = random.randint(0, num_events - 1)
+  subprocess.Popen(
+    [
+      'tdcr.bat',
+      'exec',
+      '-p',
+      str(START_PORT + pi),
+      conf['workflow']['events'][ei]['uid']['hex']
+    ],
+    stdout=FNULL,
+    stderr=subprocess.STDOUT)
+
+raw_input('Press any key to start benchmarking...')
+while (True):
+  exec_work()
+  time.sleep(.5)
