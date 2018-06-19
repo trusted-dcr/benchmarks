@@ -6,7 +6,7 @@ import shutil
 import random
 import time
 
-START_PORT = 5500
+START_PORT = 6500
 
 def hex128(i):
   return format(i, '#018x')
@@ -21,6 +21,16 @@ parser.add_argument('--peers',
   type=int,
   required=True,
   help='total amount of peers')
+parser.add_argument('--exec-delay',
+  dest='exec_delay',
+  type=int,
+  required=True,
+  help='delay between executions (ms)')
+parser.add_argument('--duration',
+  dest='duration',
+  type=int,
+  required=True,
+  help='total duration of benchmark (ms)')
 
 args = parser.parse_args()
 conf = json.load(args.graph_file)
@@ -35,12 +45,15 @@ num_relations = reduce((lambda a, b: a + b),
       len(event['milestoneRelations']) +
       len(event['responseRelations'])),
     conf['workflow']['events']))
-num_peers = args.num_peers;
+num_peers = args.num_peers
+exec_delay = args.exec_delay
+duration = args.duration
 
-print 'EVENTS:........%i' % num_events
-print 'RELAITONS......%i' % num_relations
-print 'PEERS:.........%i' % num_peers
-print 'EXEC THREADS:..%i' % num_peers
+print 'EVENTS..........%i' % num_events
+print 'RELAITONS.......%i' % num_relations
+print 'PEERS...........%i' % num_peers
+print 'EXEC DELAY......%ims' % exec_delay
+print 'TOTAL DURATION..%ims' % duration
 
 # setup peers in config
 for pi in range(num_peers):
@@ -97,6 +110,7 @@ def exec_work():
     stderr=subprocess.STDOUT)
 
 raw_input('Press any key to start benchmarking...')
-while (True):
+start = time.time()
+while ((time.time() - start) * 1000 < duration):
   exec_work()
-  time.sleep(.5)
+  time.sleep(exec_delay/1000.)
